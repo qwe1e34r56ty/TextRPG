@@ -1,0 +1,17 @@
+﻿[
+    {
+        "title": "쉬운 던전",
+        "recommandArmor": 5,
+        "reward": 1000
+    },
+    {
+        "title": "일반 던전",
+        "recommandArmor": 11,
+        "reward": 1700
+    },
+    {
+        "title": "어려운 던전",
+        "recommandArmor": 17,
+        "reward": 2500
+    }
+]

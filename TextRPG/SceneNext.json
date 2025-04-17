@@ -1,0 +1,167 @@
+[
+    {
+        "key": "Sell",
+        "next": [
+            "Shop",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "DungeonSelect",
+        "next": [
+            "Main",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "DungeonClear",
+        "next": [
+            "DungeonSelect",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "DungeonFail",
+        "next": [
+            "DungeonSelect",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Main",
+        "next": [
+            "None",
+            "Status",
+            "Inventory",
+            "Shop",
+            "DungeonSelect",
+            "Rest",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Rest",
+        "next": [
+            "Main",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Status",
+        "next": [
+            "Main",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Inventory",
+        "next": [
+            "Main",
+            "Wear",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Wear",
+        "next": [
+            "Inventory",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Shop",
+        "next": [
+            "Main",
+            "Buy",
+            "Sell",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    },
+    {
+        "key": "Buy",
+        "next": [
+            "Shop",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None",
+            "None"
+        ]
+    }
+]

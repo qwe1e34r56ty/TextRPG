@@ -1,0 +1,121 @@
+{
+  "name": "qwerty",
+  "job": "\uC804\uC0AC",
+  "attack": 10,
+  "guard": 5,
+  "hp": 100,
+  "gold": 147,
+  "clearCount": 5,
+  "items": [
+    {
+      "key": "spartaArmor",
+      "equiped": true,
+      "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uAC11\uC637",
+      "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uAC11\uC637\uC785\uB2C8\uB2E4.",
+      "price": 3500,
+      "attack": 0,
+      "guard": 15,
+      "bought": true,
+      "armor": true,
+      "weapon": false
+    },
+    {
+      "key": "steelArmor",
+      "equiped": true,
+      "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uCC3D",
+      "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uCC3D\uC785\uB2C8\uB2E4.",
+      "price": 2700,
+      "attack": 7,
+      "guard": 0,
+      "bought": true,
+      "armor": false,
+      "weapon": true
+    }
+  ],
+  "shopItems": [
+    {
+      "key": "noviceArmor",
+      "equiped": false,
+      "name": "\uC218\uB828\uC790 \uAC11\uC637",
+      "description": "\uC218\uB828\uC5D0 \uB3C4\uC6C0\uC744 \uC8FC\uB294 \uAC11\uC637\uC785\uB2C8\uB2E4.",
+      "price": 1000,
+      "attack": 0,
+      "guard": 5,
+      "bought": false,
+      "armor": true,
+      "weapon": false
+    },
+    {
+      "key": "steelarmor",
+      "equiped": false,
+      "name": "\uBB34\uC1E0\uAC11\uC637",
+      "description": "\uBB34\uC1E0\uB85C \uB9CC\uB4E4\uC5B4\uC838 \uD2BC\uD2BC\uD55C \uAC11\uC637\uC785\uB2C8\uB2E4.",
+      "price": 1800,
+      "attack": 0,
+      "guard": 9,
+      "bought": false,
+      "armor": true,
+      "weapon": false
+    },
+    {
+      "key": "spartaArmor",
+      "equiped": true,
+      "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uAC11\uC637",
+      "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uAC11\uC637\uC785\uB2C8\uB2E4.",
+      "price": 3500,
+      "attack": 0,
+      "guard": 15,
+      "bought": true,
+      "armor": true,
+      "weapon": false
+    },
+    {
+      "key": "oldSword",
+      "equiped": false,
+      "name": "\uB0A1\uC740 \uAC80",
+      "description": "\uC27D\uAC8C \uBCFC \uC218 \uC788\uB294 \uB0A1\uC740 \uAC80 \uC785\uB2C8\uB2E4.",
+      "price": 600,
+      "attack": 2,
+      "guard": 0,
+      "bought": false,
+      "armor": false,
+      "weapon": true
+    },
+    {
+      "key": "bronzeAxe",
+      "equiped": false,
+      "name": "\uCCAD\uB3D9 \uB3C4\uB07C",
+      "description": "\uC5B4\uB514\uC120\uAC00 \uC0AC\uC6A9\uB410\uB358\uAC70 \uAC19\uC740 \uB3C4\uB07C\uC785\uB2C8\uB2E4.",
+      "price": 1500,
+      "attack": 5,
+      "guard": 0,
+      "bought": false,
+      "armor": false,
+      "weapon": true
+    },
+    {
+      "key": "steelArmor",
+      "equiped": true,
+      "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uCC3D",
+      "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uCC3D\uC785\uB2C8\uB2E4.",
+      "price": 2700,
+      "attack": 7,
+      "guard": 0,
+      "bought": true,
+      "armor": false,
+      "weapon": true
+    },
+    {
+      "key": "customItem",
+      "equiped": false,
+      "name": "\uCEE4\uC2A4\uD140\uC544\uC774\uD15C",
+      "description": "\uACFC\uC81C\uB97C \uC704\uD574 \uD0DC\uC5B4\uB09C \uBB34\uAE30.",
+      "price": 9999,
+      "attack": 99,
+      "guard": 0,
+      "bought": false,
+      "armor": false,
+      "weapon": true
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+[
+    {
+        "key": "Script",
+        "x": 0,
+        "y": 0,
+        "width": 140,
+        "height": 6,
+        "border": 1
+    },
+    {
+        "key": "Dynamic",
+        "x": 0,
+        "y": 6,
+        "width": 140,
+        "height": 15,
+        "border": 1
+    },
+    {
+        "key": "Log",
+        "x": 0,
+        "y": 21,
+        "width": 140,
+        "height": 5,
+        "border": 1
+    },
+    {
+        "key": "Sprite",
+        "x": 140,
+        "y": 0,
+        "width": 43,
+        "height": 43,
+        "border": 1
+    },
+    {
+        "key": "Choice",
+        "x": 0,
+        "y": 26,
+        "width": 140,
+        "height": 9,
+        "border": 1
+    },
+    {
+        "key": "Input",
+        "x": 0,
+        "y": 35,
+        "width": 140,
+        "height": 8,
+        "border": 1
+    }
+]
