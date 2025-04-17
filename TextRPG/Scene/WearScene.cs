@@ -35,7 +35,7 @@ namespace TextRPG.Scene
             }
             ((DynamicView)viewMap[ViewID.Dynamic]).SetText(dynamicText.ToArray());
             ((SpriteView)viewMap[ViewID.Sprite]).SetText(sceneText.spriteText!);
-
+                
             foreach (var pair in viewMap)
             {
                 pair.Value.Update();
@@ -65,7 +65,6 @@ namespace TextRPG.Scene
                 {
                     for(int j = 0; j < ch.inventory.items.Count; j++)
                     {
-                        ch.inventory.items[j].equiped = false;
                         if (ch.inventory.items[j].weapon && ch.inventory.items[j].equiped)
                         {
                             ch.inventory.items[j].equiped = false;
@@ -76,7 +75,6 @@ namespace TextRPG.Scene
                 {
                     for (int j = 0; j < ch.inventory.items.Count; j++)
                     {
-                        ch.inventory.items[j].equiped = false;
                         if (ch.inventory.items[j].armor && ch.inventory.items[j].equiped)
                         {
                             ch.inventory.items[j].equiped = false;
