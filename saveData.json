@@ -4,8 +4,8 @@
   "attack": 10,
   "guard": 5,
   "hp": 100,
-  "gold": 147,
-  "clearCount": 5,
+  "gold": 21419,
+  "clearCount": 16,
   "items": [
     {
       "key": "spartaArmor",
@@ -20,12 +20,12 @@
       "weapon": false
     },
     {
-      "key": "steelArmor",
+      "key": "customItem",
       "equiped": true,
-      "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uCC3D",
-      "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uCC3D\uC785\uB2C8\uB2E4.",
-      "price": 2700,
-      "attack": 7,
+      "name": "\uCEE4\uC2A4\uD140\uC544\uC774\uD15C",
+      "description": "\uACFC\uC81C\uB97C \uC704\uD574 \uD0DC\uC5B4\uB09C \uBB34\uAE30.",
+      "price": 9999,
+      "attack": 99,
       "guard": 0,
       "bought": true,
       "armor": false,
@@ -94,26 +94,26 @@
       "weapon": true
     },
     {
-      "key": "steelArmor",
-      "equiped": true,
+      "key": "spartaLance",
+      "equiped": false,
       "name": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uCC3D",
       "description": "\uC2A4\uD30C\uB974\uD0C0\uC758 \uC804\uC0AC\uB4E4\uC774 \uC0AC\uC6A9\uD588\uB2E4\uB294 \uC804\uC124\uC758 \uCC3D\uC785\uB2C8\uB2E4.",
       "price": 2700,
       "attack": 7,
       "guard": 0,
-      "bought": true,
+      "bought": false,
       "armor": false,
       "weapon": true
     },
     {
       "key": "customItem",
-      "equiped": false,
+      "equiped": true,
       "name": "\uCEE4\uC2A4\uD140\uC544\uC774\uD15C",
       "description": "\uACFC\uC81C\uB97C \uC704\uD574 \uD0DC\uC5B4\uB09C \uBB34\uAE30.",
       "price": 9999,
       "attack": 99,
       "guard": 0,
-      "bought": false,
+      "bought": true,
       "armor": false,
       "weapon": true
     }

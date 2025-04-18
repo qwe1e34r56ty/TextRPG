@@ -69,7 +69,7 @@
             "weapon": true
         },
         {
-            "key": "steelArmor",
+            "key": "spartaLance",
             "equiped": false,
             "name": "스파르타의 창",
             "description": "스파르타의 전사들이 사용했다는 전설의 창입니다.",
