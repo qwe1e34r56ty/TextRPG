@@ -8,7 +8,7 @@ using TextRPG.View;
 
 namespace TextRPG.Scene
 {
-    internal class StatusScene : AScene
+    public class StatusScene : AScene
     {
         public StatusScene(GameContext gameContext, Dictionary<string, AView> viewMap, SceneText sceneText, SceneNext sceneNext) : base(gameContext, viewMap, sceneText, sceneNext)
         {
@@ -16,15 +16,7 @@ namespace TextRPG.Scene
         }
         public override void DrawScene()
         {
-            ((ScriptView)viewMap[ViewID.Script]).SetText(sceneText.scriptText!);
-            ((ChoiceView)viewMap[ViewID.Choice]).SetText(sceneText.choiceText!);
-            ((DynamicView)viewMap[ViewID.Dynamic]).SetText(System.Array.Empty<string>());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(System.Array.Empty<string>());
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
+            ClearScene();
 
             List<string> dynamicText = new();
 
@@ -37,14 +29,9 @@ namespace TextRPG.Scene
             dynamicText.Add($"체 력 : {ch.hp}");
             dynamicText.Add($"Gold : {ch.gold}G");
             ((DynamicView)viewMap[ViewID.Dynamic]).SetText(dynamicText.ToArray());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(sceneText.spriteText!);
+            
 
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
-            ((InputView)viewMap[ViewID.Input]).SetCursor();
+            Render();
         }
 
         public override string respond(int i)

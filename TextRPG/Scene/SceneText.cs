@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TextRPG.Scene
 {
     [Serializable]
-    internal class SceneText
+    public class SceneText
     {
         public string key { get; set; } = "";
         public string[]? scriptText { get; set; }

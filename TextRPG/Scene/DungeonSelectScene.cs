@@ -8,7 +8,7 @@ using TextRPG.View;
 
 namespace TextRPG.Scene
 {
-    internal class DungeonSelectScene : AScene
+    public class DungeonSelectScene : AScene
     {
         public DungeonSelectScene(GameContext gameContext, Dictionary<string, AView> viewMap, SceneText sceneText, SceneNext sceneNext) : base(gameContext, viewMap, sceneText, sceneNext)
         {
@@ -16,15 +16,7 @@ namespace TextRPG.Scene
         }
         public override void DrawScene()
         {
-            ((ScriptView)viewMap[ViewID.Script]).SetText(sceneText.scriptText!);
-            ((ChoiceView)viewMap[ViewID.Choice]).SetText(sceneText.choiceText!);
-            ((DynamicView)viewMap[ViewID.Dynamic]).SetText(System.Array.Empty<string>());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(System.Array.Empty<string>());
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
+            ClearScene();
             List<string> dynamicText = new();
             List<DungeonData> dungeonList = gameContext.dungeonList;
             for (int i = 0; i < dungeonList.Count; i++) {
@@ -32,14 +24,9 @@ namespace TextRPG.Scene
             }
 
             ((DynamicView)viewMap[ViewID.Dynamic]).SetText(dynamicText.ToArray());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(sceneText.spriteText!);
+            
 
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
-            ((InputView)viewMap[ViewID.Input]).SetCursor();
+            Render();
         }
 
         public override string respond(int i)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    internal class LogView : AView
+    public class LogView : AView
     {
         private Queue<string> logs = new();
 

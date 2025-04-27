@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TextRPG.Context
 {
     [Serializable]
-    internal class GameContext
+    public class GameContext
     {
         public Character ch { get; set; }
         public Shop shop { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    internal class ChoiceView : AView
+    public class ChoiceView : AView
     {
         private List<string> choices = new();
         public ChoiceView()

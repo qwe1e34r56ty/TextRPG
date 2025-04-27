@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TextRPG.Context
 {
     [Serializable]
-    internal class DungeonData
+    public class DungeonData
     {
         public string title { get; set; } = "";
         public float recommandArmor { get; set; }

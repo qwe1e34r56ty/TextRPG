@@ -8,7 +8,7 @@ using TextRPG.View;
 
 namespace TextRPG.Scene
 {
-    internal class WearScene : AScene
+    public class WearScene : AScene
     {
         public WearScene(GameContext gameContext, Dictionary<string, AView> viewMap, SceneText sceneText, SceneNext sceneNext) : base(gameContext, viewMap, sceneText, sceneNext)
         {
@@ -16,15 +16,7 @@ namespace TextRPG.Scene
         }
         public override void DrawScene()
         {
-            ((ScriptView)viewMap[ViewID.Script]).SetText(sceneText.scriptText!);
-            ((ChoiceView)viewMap[ViewID.Choice]).SetText(sceneText.choiceText!);
-            ((DynamicView)viewMap[ViewID.Dynamic]).SetText(System.Array.Empty<string>());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(System.Array.Empty<string>());
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
+            ClearScene();
 
             List<string> dynamicText = new();
             dynamicText.Add("[아이템 목록]");
@@ -34,14 +26,9 @@ namespace TextRPG.Scene
                 dynamicText.Add($"- {i + 1} {(tmp.equiped ? "[E]" : "")} {tmp.name} \t | {(tmp.attack > 0 ? "공격력" : "방어력")} + {(tmp.attack > 0 ? tmp.attack : tmp.guard)} \t | {tmp.description}");
             }
             ((DynamicView)viewMap[ViewID.Dynamic]).SetText(dynamicText.ToArray());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(sceneText.spriteText!);
-                
-            foreach (var pair in viewMap)
-            {
-                pair.Value.Update();
-                pair.Value.Render();
-            }
-            ((InputView)viewMap[ViewID.Input]).SetCursor();
+            
+
+            Render();
         }
         public override string respond(int i)
         {

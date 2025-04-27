@@ -6,29 +6,21 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    public class DynamicView : AView
+    public class EntireView : AView
     {
         private List<string> lines = new();
 
         public override void ClearText()
         {
-            this.lines.Clear();
+            // do nothing
         }
         public void SetText(string[] lines)
         {
-            this.lines.Clear();
-            foreach (var line in lines)
-            {
-                this.lines.Add(line);
-            }
+            // do nothing
         }
         public override void Update()
         {
-            view?.Clear();
-            for (int i = 0; i < lines.Count; i++)
-            {
-                view?.WriteLine(i, lines[i]);
-            }
+            // do nothing
         }
     }
 }

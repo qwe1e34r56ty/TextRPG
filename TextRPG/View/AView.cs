@@ -23,8 +23,9 @@ namespace TextRPG.View
         public const string Log = "Log";
         public const string Sprite = "Sprite";
         public const string Input = "Input";
+        public const string Entire = "Entire";
     }
-    internal abstract class AView
+    public abstract class AView
     {
         public ViewPort? view;
         public AView()

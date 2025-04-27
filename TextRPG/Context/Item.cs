@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TextRPG.Context
 {
     [Serializable]
-    internal class Item
+    public class Item
     {
         public string key { get; set; }
         public bool equiped { get; set; }

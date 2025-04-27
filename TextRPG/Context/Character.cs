@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 namespace TextRPG.Context
 {
     [Serializable]
-    internal class Character
+    public class Character
     {
         public string? name { get; set; }
         public string? job { get; set; }
-        public float defaultAttack { get; set; }
-        public float defaultGuard { get; set; }
+        public float defaultAttack { get; set; } // 현재 레벨 기본 공격력
+        public float defaultGuard { get; set; } // 현재 레벨 기본 방어력
         public int hp { get; set; }
         public int gold { get; set; }
         public int clearCount {  get; set; }

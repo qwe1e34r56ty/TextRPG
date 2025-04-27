@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TextRPG.Context
 {
     [Serializable]
-    internal class Inventory
+    public class Inventory
     {
         public List<Item>? items{ get; set; }
         public Inventory(List<Item> items)

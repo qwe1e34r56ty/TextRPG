@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    internal class SpriteView : AView
+    public class SpriteView : AView
     {
         private List<string> lines = new();
 

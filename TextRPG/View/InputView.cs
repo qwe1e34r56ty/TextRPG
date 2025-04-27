@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    internal class InputView : AView
+    public class InputView : AView
     {
         public String prefix { get; private set; }
 

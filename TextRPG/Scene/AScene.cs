@@ -23,7 +23,7 @@ namespace TextRPG.Scene
         public const string DungeonClear = "DungeonClear";
         public const string DungeonFail = "DungeonFail";
     }
-    internal abstract class AScene
+    public abstract class AScene
     {
         protected GameContext gameContext { get; set; }
         protected Dictionary<string, AView> viewMap { get; set; }
@@ -36,12 +36,21 @@ namespace TextRPG.Scene
             this.sceneText = sceneText;
             this.sceneNext = sceneNext;
         }
+        public void Render()
+        {
+            foreach (var pair in viewMap)
+            {
+                pair.Value.Update();
+                pair.Value.Render();
+            }
+            ((InputView)viewMap[ViewID.Input]).SetCursor();
+        }
         public virtual void DrawScene()
         {
             ((ScriptView)viewMap[ViewID.Script]).SetText(sceneText.scriptText!);
             ((ChoiceView)viewMap[ViewID.Choice]).SetText(sceneText.choiceText!);
             ((DynamicView)viewMap[ViewID.Dynamic]).SetText(System.Array.Empty<string>());
-            ((SpriteView)viewMap[ViewID.Sprite]).SetText(sceneText.spriteText!);
+            
             foreach (var pair in viewMap)
             {
                 pair.Value.Update();
@@ -50,5 +59,19 @@ namespace TextRPG.Scene
             ((InputView)viewMap[ViewID.Input]).SetCursor();
         }
         public abstract string respond(int i);
+        public void ClearScene()
+        {
+            ((ScriptView)viewMap[ViewID.Script]).SetText(sceneText.scriptText!);
+            ((ChoiceView)viewMap[ViewID.Choice]).SetText(sceneText.choiceText!);
+            ((DynamicView)viewMap[ViewID.Dynamic]).SetText(System.Array.Empty<string>());
+            ((SpriteView)viewMap[ViewID.Sprite]).SetText(System.Array.Empty<string>());
+
+            foreach (var pair in viewMap)
+            {
+                pair.Value.Update();
+                pair.Value.Render();
+            }
+            ((InputView)viewMap[ViewID.Input]).SetCursor();
+        }
     }
 }

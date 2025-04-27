@@ -5,21 +5,30 @@ using TextRPG.View;
 using TextRPG.Scene;
 using static System.Formats.Asn1.AsnWriter;
 using TextRPG.Context;
+using System.Security.Principal;
 
 
 namespace TextRPG
 {
-    internal class MainCtrl
+    public class MainCtrl
     {
-        delegate AScene SceneMaker(GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap);
         static void Main(string[] args)
         {
-            Console.SetWindowSize(183, 45);
-            Console.SetBufferSize(183, 45);
-            int width = Console.WindowWidth;
-            int height = Console.WindowHeight;
+            //Save 불러오기
 
+            var entireScreenSizeJson = File.ReadAllText(JsonPath.entireScreenSizeJsonPath);
+            EntireScreenSize entireScreenSize = JsonSerializer.Deserialize<EntireScreenSize>(entireScreenSizeJson)!;
+            if (OperatingSystem.IsWindows())
+            {
+                Console.SetWindowSize(entireScreenSize.width, entireScreenSize.height);
+                Console.SetBufferSize(entireScreenSize.width, entireScreenSize.height);
+            }
+            else
+            {
+                Console.WriteLine($"SetWindowSize ignored: width={entireScreenSize.width}, height={entireScreenSize.height}");
+            }
 
+            //Save 불러오기
             string? name = "";
             string? useSaveStr = "";
             bool? useSave = null;
@@ -49,7 +58,6 @@ namespace TextRPG
                     break;
                 }
             }
-
             string saveDataJson;
             SaveData saveData;
             if (useSave == true && File.Exists(JsonPath.saveDataJsonPath))
@@ -68,6 +76,7 @@ namespace TextRPG
                 saveData.name = name;
             }
 
+            //정적 데이터 불러오기
             Dictionary<string, AView> viewMap = new();
             initViewMap(viewMap);
             Dictionary<string, SceneText> sceneTextMap = new();
@@ -78,15 +87,32 @@ namespace TextRPG
             Dictionary<string, SceneMaker> sceneFactoryMap = new();
             initSceneFactoryMap(sceneFactoryMap);
 
+            //Save 외의 동적 데이터 불러오기
             var dungeonDataJson = File.ReadAllText(JsonPath.dungeonDataJsonPath);
             var dungeonData = JsonSerializer.Deserialize<List<DungeonData>>(dungeonDataJson);
             GameContext gameContext = new(saveData!, dungeonData!);
-            AScene startScene = sceneFactoryMap[SceneID.Main](gameContext, viewMap, sceneTextMap, sceneMap, sceneNextMap);
+            AScene startScene = sceneFactoryMap[SceneID.Main](gameContext, 
+                viewMap, 
+                sceneTextMap,
+                sceneMap, 
+                sceneNextMap);
 
-            run(gameContext, startScene, viewMap, sceneTextMap, sceneMap, sceneFactoryMap, sceneNextMap);
+            //실행
+            run(gameContext,
+                startScene, 
+                viewMap, 
+                sceneTextMap,
+                sceneMap, 
+                sceneFactoryMap,
+                sceneNextMap);
         }
 
-        static void run(GameContext gameContext, AScene startScene, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneMaker> sceneFactoryMap, Dictionary<string, SceneNext> sceneNextMap)
+        static void run(GameContext gameContext,
+            AScene startScene, Dictionary<string, AView> viewMap,
+            Dictionary<string, SceneText> sceneTextMap,
+            Dictionary<string, AScene> sceneMap,
+            Dictionary<string, SceneMaker> sceneFactoryMap,
+            Dictionary<string, SceneNext> sceneNextMap)
         {
             AScene curScene = startScene;
             string response = "";
@@ -129,7 +155,11 @@ namespace TextRPG
                     }
                     else
                     {
-                        curScene = sceneFactoryMap[response](gameContext, viewMap, sceneTextMap, sceneMap, sceneNextMap);
+                        curScene = sceneFactoryMap[response](gameContext, 
+                            viewMap,
+                            sceneTextMap,
+                            sceneMap, 
+                            sceneNextMap);
                         curScene.DrawScene();
                     }
                     // todo 다른 화면 넘어가기? or 현재 화면 처리하기
@@ -180,103 +210,39 @@ namespace TextRPG
 
         delegate void AddPair<T>(string sceneKey, Dictionary<string, SceneMaker> sceneFactoryMap);
 
+        delegate AScene SceneMaker(GameContext gameContext,
+            Dictionary<string, AView> viewMap,
+            Dictionary<string, SceneText> sceneTextMap,
+            Dictionary<string, AScene> sceneMap,
+            Dictionary<string, SceneNext> sceneNextMap);
+
+        static void RegisterScene<T>(Dictionary<string, SceneMaker> sceneFactoryMap, string sceneID) where T : AScene
+        {
+            sceneFactoryMap[sceneID] = (gameContext, viewMap, sceneTextMap, sceneMap, sceneNextMap) =>
+            {
+                if (!sceneMap.ContainsKey(sceneID))
+                {
+                    var sceneText = sceneTextMap[sceneID];
+                    var sceneNext = sceneNextMap[sceneID];
+                    sceneMap[sceneID] = (AScene)Activator.CreateInstance(typeof(T), gameContext, viewMap, sceneText, sceneNext)!;
+                }
+                return sceneMap[sceneID];
+            };
+        }
+
+        // 새 Scene을 만들면 이 부분에 추가
         static void initSceneFactoryMap(Dictionary<string, SceneMaker> sceneFactoryMap)
         {
-            sceneFactoryMap[SceneID.Main] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Main))
-                {
-                    sceneMap[SceneID.Main] = new MainScene(gameContext, viewMap, sceneTextMap[SceneID.Main], sceneNextMap[SceneID.Main]);
-                }
-                return sceneMap[SceneID.Main];
-            };
-
-            sceneFactoryMap[SceneID.Wear] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Wear))
-                {
-                    sceneMap[SceneID.Wear] = new WearScene(gameContext, viewMap, sceneTextMap[SceneID.Wear], sceneNextMap[SceneID.Wear]);
-                }
-                return sceneMap[SceneID.Wear];
-            };
-
-            sceneFactoryMap[SceneID.Inventory] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Inventory))
-                {
-                    sceneMap[SceneID.Inventory] = new InventoryScene(gameContext, viewMap, sceneTextMap[SceneID.Inventory], sceneNextMap[SceneID.Inventory]);
-                }
-                return sceneMap[SceneID.Inventory];
-            };
-
-            sceneFactoryMap[SceneID.Status] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Status))
-                {
-                    sceneMap[SceneID.Status] = new StatusScene(gameContext, viewMap, sceneTextMap[SceneID.Status], sceneNextMap[SceneID.Status]);
-                }
-                return sceneMap[SceneID.Status];
-            };
-
-            sceneFactoryMap[SceneID.Shop] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Shop))
-                {
-                    sceneMap[SceneID.Shop] = new ShopScene(gameContext, viewMap, sceneTextMap[SceneID.Shop], sceneNextMap[SceneID.Shop]);
-                }
-                return sceneMap[SceneID.Shop];
-            };
-
-            sceneFactoryMap[SceneID.Buy] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Buy))
-                {
-                    sceneMap[SceneID.Buy] = new BuyScene(gameContext, viewMap, sceneTextMap[SceneID.Buy], sceneNextMap[SceneID.Buy]);
-                }
-                return sceneMap[SceneID.Buy];
-            };
-
-            sceneFactoryMap[SceneID.Rest] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Rest))
-                {
-                    sceneMap[SceneID.Rest] = new RestScene(gameContext, viewMap, sceneTextMap[SceneID.Rest], sceneNextMap[SceneID.Rest]);
-                }
-                return sceneMap[SceneID.Rest];
-            };
-
-            sceneFactoryMap[SceneID.Sell] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.Sell))
-                {
-                    sceneMap[SceneID.Sell] = new SellScene(gameContext, viewMap, sceneTextMap[SceneID.Sell], sceneNextMap[SceneID.Sell]);
-                }
-                return sceneMap[SceneID.Sell];
-            };
-            sceneFactoryMap[SceneID.DungeonSelect] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.DungeonSelect))
-                {
-                    sceneMap[SceneID.DungeonSelect] = new DungeonSelectScene(gameContext, viewMap, sceneTextMap[SceneID.DungeonSelect], sceneNextMap[SceneID.DungeonSelect]);
-                }
-                return sceneMap[SceneID.DungeonSelect];
-            };
-            sceneFactoryMap[SceneID.DungeonClear] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.DungeonClear))
-                {
-                    sceneMap[SceneID.DungeonClear] = new DungeonClearScene(gameContext, viewMap, sceneTextMap[SceneID.DungeonClear], sceneNextMap[SceneID.DungeonClear]);
-                }
-                return sceneMap[SceneID.DungeonClear];
-            };
-            sceneFactoryMap[SceneID.DungeonFail] = (GameContext gameContext, Dictionary<string, AView> viewMap, Dictionary<string, SceneText> sceneTextMap, Dictionary<string, AScene> sceneMap, Dictionary<string, SceneNext> sceneNextMap) =>
-            {
-                if (!sceneMap.ContainsKey(SceneID.DungeonFail))
-                {
-                    sceneMap[SceneID.DungeonFail] = new DungeonFailScene(gameContext, viewMap, sceneTextMap[SceneID.DungeonFail], sceneNextMap[SceneID.DungeonFail]);
-                }
-                return sceneMap[SceneID.DungeonFail];
-            };
+            RegisterScene<MainScene>(sceneFactoryMap, SceneID.Main);
+            RegisterScene<WearScene>(sceneFactoryMap, SceneID.Wear);
+            RegisterScene<InventoryScene>(sceneFactoryMap, SceneID.Inventory);
+            RegisterScene<StatusScene>(sceneFactoryMap, SceneID.Status);
+            RegisterScene<ShopScene>(sceneFactoryMap, SceneID.Shop);
+            RegisterScene<BuyScene>(sceneFactoryMap, SceneID.Buy);
+            RegisterScene<RestScene>(sceneFactoryMap, SceneID.Rest);
+            RegisterScene<DungeonSelectScene>(sceneFactoryMap, SceneID.DungeonSelect);
+            RegisterScene<DungeonClearScene>(sceneFactoryMap, SceneID.DungeonClear);
+            RegisterScene<DungeonFailScene>(sceneFactoryMap, SceneID.DungeonFail);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TextRPG.View
 {
-    internal class ScriptView : AView
+    public class ScriptView : AView
     {
         private List<string> lines = new();
 
